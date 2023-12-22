@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Tic Tac Toe</title>
+</head>
+
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div class="board">
+        <div id="0" class="cell"></div>
+        <div id="1" class="cell"></div>
+        <div id="2" class="cell"></div>
+        <div id="3" class="cell"></div>
+        <div id="4" class="cell"></div>
+        <div id="5" class="cell"></div>
+        <div id="6" class="cell"></div>
+        <div id="7" class="cell"></div>
+        <div id="8" class="cell"></div>
+    </div>
+    <button onclick="resetGame()">Reset</button>
+    <div id="winner"></div>
+    <div id="wins">
+        <p class="player-wins" style="
+        color: blue;
+    ">Player X Wins: <span id="playerXWins">0</span></p>
+        <p class="player-wins" style="
+        color: red;
+    ">Player O Wins: <span id="playerOWins">0</span></p>
+    </div>
+
+    <script>
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let currentPlayer = "X";
+        let cells = document.querySelectorAll(".cell");
+        let winnerDisplay = document.getElementById("winner");
+        let playerXWinsDisplay = document.getElementById("playerXWins");
+        let playerOWinsDisplay = document.getElementById("playerOWins");
+        let playerXWins = 0;
+        let playerOWins = 0;
+
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].addEventListener("click", playerClick);
+        }
+
+        function playerClick(event) {
+            const cell = event.target;
+            const cellIndex = parseInt(cell.id);
+
+            if (board[cellIndex] === "") {
+                board[cellIndex] = currentPlayer;
+                cell.innerText = currentPlayer;
+                cell.classList.add(currentPlayer.toLowerCase());
+
+                if (checkWinner(currentPlayer)) {
+                    winnerDisplay.innerText = "Player " + currentPlayer + " wins!";
+                    currentPlayer === "X" ? playerXWins++ : playerOWins++;
+                    playerXWinsDisplay.innerText = playerXWins;
+                    playerOWinsDisplay.innerText = playerOWins;
+                    disableClick();
+                    setTimeout(resetGame, 2000);
+                } else if (checkDraw()) {
+                    winnerDisplay.innerText = "It's a draw!";
+                    disableClick();
+                    setTimeout(resetGame, 2000);
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                }
+            }
+        }
+
+        function checkWinner(player) {
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let i = 0; i < winningCombinations.length; i++) {
+                const [a, b, c] = winningCombinations[i];
+                if (board[a] === player && board[b] === player && board[c] === player) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkDraw() {
+            return board.every(cell => cell !== "");
+        }
+
+        function disableClick() {
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].removeEventListener("click", playerClick);
+            }
+        }
+
+        function resetGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X";
+            winnerDisplay.innerText = "";
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].innerText = "";
+                cells[i].classList.remove("x");
+                cells[i].classList.remove("o");
+                cells[i].addEventListener("click", playerClick);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

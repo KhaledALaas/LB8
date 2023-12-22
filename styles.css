@@ -1,0 +1,60 @@
+h1 {
+    font-family: sans-serif;
+    font-size: xxx-large;
+}
+
+button {
+    font-family: fantasy;
+    font-size: larger;
+}
+
+.board {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.cell {
+    width: 98px;
+    height: 98px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+.x {
+    color: blue;
+}
+
+.o {
+    color: red;
+}
+
+body {
+    background: rgb(34, 43, 195);
+    background: linear-gradient(270deg, rgba(34, 43, 195, 1) 0%, rgba(242, 23, 8, 1) 100%);
+    text-align: center;
+}
+
+#winner {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#wins {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: xx-large;
+    font-family: system-ui;
+}
+
+.player-wins {
+    margin: 0 10px;
+}
